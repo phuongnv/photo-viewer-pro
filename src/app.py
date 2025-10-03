@@ -78,16 +78,16 @@ def show_basic_processing():
                                               ])
             if processing_option == "Grayscale":
                 processed_image = cv.cvtColor(opencv_image, cv.COLOR_BGR2GRAY)
-                st.image(processed_image, use_container_width=True, clamp=True)
+                st.image(processed_image, width='stretch', clamp=True)
                 st.info(f"Shape: {processed_image.shape}")
             elif processing_option == "Grayscale 2":
                 processed_image = cv.cvtColor(opencv_image, cv.COLOR_BGR2RGBA)
-                st.image(processed_image, use_container_width=True, clamp=True)
+                st.image(processed_image, width='stretch', clamp=True)
                 st.info(f"Shape: {processed_image.shape}")
             elif processing_option == "Gaussian Blur":
                 kernel_size = st.slider("Chọn kích thước kernel", 3, 31, 15, step=2)
                 processed_image = cv.GaussianBlur(opencv_image, (kernel_size, kernel_size), 0)
-                st.image(processed_image, use_container_width=True)
+                st.image(processed_image, width='stretch')
                 st.info(f"Shape: {processed_image.shape}")
             elif processing_option == "Canny Edge Detection":
                 low_threshold = st.slider("Ngưỡng thấp", 0, 255, 100)
@@ -129,11 +129,11 @@ def show_basic_processing():
                 _, png_buffer = cv.imencode(".png", processed_image)
                 _, jpg_buffer = cv.imencode(".jpg", processed_image)
                 # io_buf = io.BytesIO(buffer)
-                st.download_button(label="Tải về ảnh PNG",
+                st.download_button(label="Ảnh PNG",
                                 data=io.BytesIO(png_buffer),
                                 file_name="processed_image.png",
                                 mime="image/png")
-                st.download_button(label="Tải về ảnh JPG",
+                st.download_button(label="Ảnh JPG",
                                 data=io.BytesIO(jpg_buffer),
                                 file_name="processed_image.jpg",
                                 mime="image/jpeg")

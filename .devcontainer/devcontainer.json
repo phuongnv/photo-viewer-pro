@@ -12,7 +12,8 @@
   "mounts": [
     "source=${localWorkspaceFolder}/src,target=/app/src,type=bind,consistency=cached",
     "source=${localWorkspaceFolder}/requirements.txt,target=/app/requirements.txt,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/README.md,target=/app/README.md,type=bind,consistency=cached"
+    "source=${localWorkspaceFolder}/README.md,target=/app/README.md,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/.vscode/launch.json,target=/app/.vscode/launch.json,type=bind,consistency=cached"
   ],
   "workspaceFolder": "/app",
   "remoteUser": "root",
