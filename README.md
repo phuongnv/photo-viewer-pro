@@ -1,12 +1,12 @@
 # Photo Viewer Pro
 
-A Python 3 application for viewing and processing images using OpenCV, with Docker development environment.
+A Python 3 application for viewing and processing images using OpenCV, with a VS Code Dev Container environment.
 
 ## Features
 
 - Python 3.11 with OpenCV
-- Docker development environment
-- Live code reloading with volume mapping
+- VS Code Dev Container environment (no docker-compose required)
+- Live code mapping via devcontainer mounts (src, requirements.txt, README.md)
 - Jupyter notebook support
 - Web interface capabilities (Flask)
 
@@ -15,44 +15,33 @@ A Python 3 application for viewing and processing images using OpenCV, with Dock
 ### Prerequisites
 
 - Docker
-- Docker Compose
+- VS Code + Dev Containers extension
 
-### Development Setup
+### Development Setup (VS Code Dev Containers)
 
-1. **Clone and navigate to the project:**
+1. **Clone and open in VS Code:**
    ```bash
    git clone <your-repo-url>
    cd photo-viewer-pro
    ```
-
-2. **Build and start the development environment:**
+2. **Reopen in container:**
+   - In VS Code, press `Cmd+Shift+P` (macOS) / `Ctrl+Shift+P` (Windows/Linux)
+   - Choose: `Dev Containers: Reopen in Container`
+3. **Run the application:**
    ```bash
-   docker-compose up --build
-   ```
-
-3. **Access the development container:**
-   ```bash
-   docker-compose exec photo-viewer-dev bash
-   ```
-
-4. **Run the application:**
-   ```bash
-   # Inside the container
+   # Inside the container terminal
    python src/main.py
    ```
 
 ### Development Workflow
 
-The `src/` directory is mapped to the container, so any changes you make to files in `src/` will be immediately reflected in the container.
+The following are bind-mounted into the container:
 
-#### Running Jupyter Notebook
+- `src/` → `/app/src`
+- `requirements.txt` → `/app/requirements.txt`
+- `README.md` → `/app/README.md`
 
-```bash
-# Inside the container
-jupyter notebook --ip=0.0.0.0 --port=8888 --no-browser --allow-root
-```
-
-Then open `http://localhost:8888` in your browser.
+Changes on the host reflect immediately inside the container.
 
 #### Running a Web Server
 
@@ -67,14 +56,15 @@ Then open `http://localhost:8000` in your browser.
 
 ```
 photo-viewer-pro/
-├── Dockerfile              # Docker configuration
-├── docker-compose.yml      # Development environment
-├── requirements.txt        # Python dependencies
-├── README.md              # This file
-├── .gitignore             # Git ignore rules
-└── src/                   # Source code (mapped to container)
+├── .devcontainer/
+│   ├── Dockerfile          # Image for dev container
+│   └── devcontainer.json   # Dev container config (mounts, ports, extensions)
+├── requirements.txt        # Python dependencies (mounted)
+├── README.md               # This file (mounted)
+├── .gitignore
+└── src/                    # Source code (mounted)
     ├── __init__.py
-    └── main.py            # Main application entry point
+    └── main.py
 ```
 
 ### Available Services
@@ -93,42 +83,35 @@ photo-viewer-pro/
 
 ### Development Commands
 
+Using VS Code Dev Containers:
+
 ```bash
-# Build the container
-docker-compose build
+# Open Command Palette (in VS Code): Dev Containers: Reopen in Container
+# Rebuild after changing devcontainer.json or Dockerfile
+# Command Palette: Dev Containers: Rebuild Container
+```
 
-# Start the development environment
-docker-compose up
+Inside the container terminal:
 
-# Run in background
-docker-compose up -d
+```bash
+# Run the app
+python src/main.py
 
-# Stop the environment
-docker-compose down
-
-# Rebuild and start
-docker-compose up --build
-
-# Access container shell
-docker-compose exec photo-viewer-dev bash
-
-# Run Python scripts
-docker-compose exec photo-viewer-dev python src/main.py
-
-# Install new packages
-docker-compose exec photo-viewer-dev pip install <package-name>
+# Install new packages after editing requirements.txt
+pip install -r requirements.txt
 ```
 
 ### Adding New Dependencies
 
 1. Add the package to `requirements.txt`
-2. Rebuild the container: `docker-compose up --build`
+2. Inside the container, run: `pip install -r requirements.txt`
+3. If base image changes are needed, use Command Palette: `Dev Containers: Rebuild Container`
 
 ### Troubleshooting
 
-- If you encounter permission issues, make sure Docker has proper permissions
-- If the container doesn't start, check the logs: `docker-compose logs`
-- For OpenCV GUI issues, ensure you're running with proper display forwarding if needed
+- If you encounter permission issues, ensure Docker Desktop is running and VS Code has access
+- To rebuild after config changes, use: `Dev Containers: Rebuild Container`
+- For OpenCV GUI issues, ensure proper display forwarding if needed
 
 ## Contributing
 
