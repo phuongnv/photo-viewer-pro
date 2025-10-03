@@ -1,0 +1,37 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
+  "name": "Photo Viewer Pro Dev",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "runArgs": [
+    "-p", "8000:8000",
+    "-p", "8888:8888"
+  ],
+  "mounts": [
+    "source=${localWorkspaceFolder}/src,target=/app/src,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/requirements.txt,target=/app/requirements.txt,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/README.md,target=/app/README.md,type=bind,consistency=cached"
+  ],
+  "workspaceFolder": "/app",
+  "remoteUser": "root",
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.terminal.activateEnvironment": false,
+        "files.exclude": {
+          "**/__pycache__": true
+        }
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  },
+  "postCreateCommand": "pip install --no-cache-dir -r requirements.txt"
+}
