@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libpng-dev \
     libtiff-dev \
-    libatlas-base-dev \
+    # libatlas-base-dev \
     python3-dev \
     python3-numpy \
     && rm -rf /var/lib/apt/lists/*
